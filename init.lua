@@ -2,9 +2,9 @@
 -- Bows Mod by UjEdwin
 
 bows = {
-	pvp = minetest.setting_getbool("enable_pvp"),
-	tnt = minetest.setting_getbool("enable_tnt") and minetest.get_modpath("tnt"),
-	creative = minetest.setting_getbool("creative_mode"),
+	pvp = minetest.settings:get_bool("enable_pvp"),
+	tnt = minetest.settings:get_bool("enable_tnt") and minetest.get_modpath("tnt"),
+	creative = minetest.settings:get_bool("creative_mode"),
 	mesecons = minetest.get_modpath("mesecons"),
 	registed_arrows = {},
 	registed_bows = {},
@@ -134,7 +134,7 @@ bows.shoot = function(itemstack, user, pointed_thing)
 	item.name = replace
 	itemstack:replace(item)
 
-	local pos = user:getpos()
+	local pos = user:get_pos()
 	local dir = user:get_look_dir()
 	local e = minetest.add_entity({
 		x = pos.x,

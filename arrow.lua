@@ -105,8 +105,8 @@ minetest.register_entity("bows:arrow",{
 		if hurt > 100 or hp <= hurt then
 
 			self.target:set_detach()
-			self.target:setvelocity({x = 0, y = 4, z = 0})
-			self.target:setacceleration({x = 0, y = -10, z = 0})
+			self.target:set_velocity({x = 0, y = 4, z = 0})
+			self.target:set_acceleration({x = 0, y = -10, z = 0})
 			self.on_punch = function(self, puncher, time_from_last_punch,
 				tool_capabilities, dir) end
 
@@ -118,8 +118,7 @@ minetest.register_entity("bows:arrow",{
 
 	on_activate = function(self, staticdata)
 
-		if (mobs and mobs.entity and mobs.entity == false)
-		or not self then
+		if not self then
 			self.object:remove()
 			return
 		end
@@ -176,8 +175,8 @@ minetest.register_entity("bows:arrow",{
 				minetest.get_node_timer(pos):start(2)
 			end
 
-			self.object:setvelocity({x = 0, y = 0, z = 0})
-			self.object:setacceleration({x = 0, y = 0, z = 0})
+			self.object:set_velocity({x = 0, y = 0, z = 0})
+			self.object:set_acceleration({x = 0, y = 0, z = 0})
 			self.stuck = true
 
 			bows.registed_arrows[self.name].on_hit_node(self, pos, self.user,{
@@ -204,8 +203,8 @@ minetest.register_entity("bows:arrow",{
 			and ob:get_luaentity().physical
 			and ob:get_luaentity().name ~= "__builtin:item") ) then
 
-				self.object:setvelocity({x = 0, y = 0, z = 0})
-				self.object:setacceleration({x = 0, y = 0, z = 0})
+				self.object:set_velocity({x = 0, y = 0, z = 0})
+				self.object:set_acceleration({x = 0, y = 0, z = 0})
 				self.stuck = true
 
 				bows.on_hit_object(self, ob, self.dmg, self.user,{

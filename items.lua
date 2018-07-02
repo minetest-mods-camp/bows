@@ -9,9 +9,9 @@ bows.register_bow("bow_wood",{
 	uses = 50,
 	level = 1,
 	craft = {
-		{"", "group:stick", "farming:cotton"},
-		{"group:stick", "", "farming:cotton"},
-		{"", "group:stick", "farming:cotton"}
+		{"", "group:stick", "farming:string"},
+		{"group:stick", "", "farming:string"},
+		{"", "group:stick", "farming:string"}
 	},
 })
 
@@ -22,9 +22,9 @@ bows.register_bow("bow_steel",{
 	uses = 140,
 	level = 8,
 	craft = {
-		{"", "default:steel_ingot", "farming:cotton"},
-		{"default:steel_ingot", "", "farming:cotton"},
-		{"", "default:steel_ingot", "farming:cotton"}
+		{"", "default:steel_ingot", "farming:string"},
+		{"default:steel_ingot", "", "farming:string"},
+		{"", "default:steel_ingot", "farming:string"}
 	},
 })
 
@@ -35,48 +35,48 @@ bows.register_bow("bow_bronze",{
 	uses = 280,
 	level = 10,
 	craft = {
-		{"", "default:bronze_ingot", "farming:cotton"},
-		{"default:bronze_ingot", "", "farming:cotton"},
-		{"", "default:bronze_ingot", "farming:cotton"}
+		{"", "default:bronze_ingot", "farming:string"},
+		{"default:bronze_ingot", "", "farming:string"},
+		{"", "default:bronze_ingot", "farming:string"}
 	},
 })
 
 bows.register_arrow("arrow",{
 	description = "Arrow",
 	texture = "bows_arrow_wood.png",
-	damage = 3, --5,
+	damage = 5,
 	craft_count = 4,
 	craft = {
-		{"default:flint", "group:stick", "group:leaves"}
+		{"default:flint", "group:stick", "mobs:chicken_feather"} -- "group:leaves"}
 	}
 })
 
 bows.register_arrow("arrow_steel",{
 	description = "Steel arrow",
 	texture = "bows_arrow_wood.png^[colorize:#FFFFFFcc",
-	damage = 6, --8,
+	damage = 8,
 	craft_count = 4,
 	craft = {
-		{"default:steel_ingot", "group:stick", "group:leaves"}
+		{"default:steel_ingot", "group:stick", "mobs:chicken_feather"} -- "group:leaves"}
 	}
 })
 
 bows.register_arrow("arrow_mese",{
 	description = "Mese arrow",
 	texture = "bows_arrow_wood.png^[colorize:#e3ff00cc",
-	damage = 7, --12,
+	damage = 12,
 	craft_count = 4,
 	craft = {
-		{"default:mese_crystal", "group:stick", "group:leaves"}
+		{"default:mese_crystal", "group:stick", "mobs:chicken_feather"} -- "group:leaves"}
 	}
 })
 
 bows.register_arrow("arrow_diamond",{
 	description = "Diamond arrow",
 	texture = "bows_arrow_wood.png^[colorize:#15d7c2cc",
-	damage = 8, --15,
+	damage = 15,
 	craft_count = 4,
 	craft = {
-		{"default:diamond", "group:stick", "group:leaves"}
+		{"default:diamond", "group:stick", "mobs:chicken_feather"} -- "group:leaves"}
 	}
 })
