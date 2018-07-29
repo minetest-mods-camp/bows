@@ -1,4 +1,8 @@
 
+-- Localise functions
+local floor, min, max = math.floor, math.min, math.max
+
+
 bows.nothing = function(self, target, hp, user, lastpos)
 	return self
 end
@@ -51,7 +55,7 @@ bows.on_hit_node = function(self, pos, user, lastpos)
 			m.z = 0.6
 		 end
 
-		local b = math.max(bigest.x, bigest.y, bigest.z)
+		local b = max(bigest.x, bigest.y, bigest.z)
 
 		if b == bigest.x then
 			pos.x = npos.x + m.x
@@ -69,7 +73,7 @@ end
 
 
 bows.rnd = function(r)
-	return math.floor(r + 0.5)
+	return floor(r + 0.5)
 end
 
 
@@ -81,48 +85,44 @@ bows.arrow_remove = function(self)
 end
 
 
---= Functions borrowed from Kaeza's Firearms mod (BSD 2 clause license)
-
-local min, max = math.min, math.max
+--= Functions inspired from Kaeza's Firearms mod
 
 local function minmax(x, y)
 	return min(x, y), max(x, y)
 end
 
 
-local function point_in_box(p, b1, b2)
+local function pos_in_box(p, b1, b2)
 
 	local xmin, xmax = minmax(b1.x, b2.x)
 	local ymin, ymax = minmax(b1.y, b2.y)
 	local zmin, zmax = minmax(b1.z, b2.z)
-	local px, py, pz = p.x, p.y, p.z
 
-	return  px >= xmin and px <= xmax and
-			py >= ymin and py <= ymax and
-			pz >= zmin and pz <= zmax
+	return p.x >= xmin and p.x <= xmax
+			and p.y >= ymin and p.y <= ymax
+			and p.z >= zmin and p.z <= zmax
 end
 
 
-local function get_obj_box_abs(obj)
+local function get_obj_box(obj)
 
 	local box
 
 	if obj:is_player() then
-		box = { -.5, -.5, -.5, .5, 1.5, .5 }
+		box = {-.5, -.5, -.5, .5, 1.5, .5}
 	else
-		box = (obj:get_luaentity().collisionbox
-				or { -0.5,-0.5,-0.5, 0.5,0.5,0.5 })
+		box = obj:get_luaentity().collisionbox
+				or {-0.5, -0.5, -0.5, 0.5, 0.5, 0.5}
 	end
 
-	local pos = obj:get_pos()
-	local px, py, pz = pos.x, pos.y, pos.z
+	local p = obj:get_pos()
 	local x1, y1, z1, x2, y2, z2 = unpack(box)
 
-	return {x = x1 + px, y = y1 + py, z = z1 + pz},
-			{x = x2 + px, y = y2 + py, z = z2 + pz}
+	return {x = x1 + p.x, y = y1 + p.y, z = z1 + p.z},
+			{x = x2 + p.x, y = y2 + p.y, z = z2 + p.z}
 end
 
---= END of borrow :)
+--= END (Thanks Kaeza :)
 
 
 minetest.register_entity("bows:arrow",{
@@ -216,11 +216,10 @@ minetest.register_entity("bows:arrow",{
 			and ob:get_luaentity().physical
 			and ob:get_luaentity().name ~= "__builtin:item") ) then
 
-				-- Entity specific collision detection
-				-- Thanks to Kaeza's Firearms mod :)
-				local p1, p2 = get_obj_box_abs(ob)
+				-- Object specific collision detection
+				local p1, p2 = get_obj_box(ob)
 
-				if point_in_box(pos, p1, p2) then
+				if pos_in_box(pos, p1, p2) then
 
 					self.object:set_velocity({x = 0, y = 0, z = 0})
 					self.object:set_acceleration({x = 0, y = 0, z = 0})
