@@ -3,6 +3,7 @@ bows.nothing = function(self, target, hp, user, lastpos)
 	return self
 end
 
+
 bows.on_hit_object = function(self, target, hp, user, lastpos)
 
 	target:punch(user, 1.0, {
@@ -23,13 +24,15 @@ bows.on_hit_node = function(self, pos, user, lastpos)
 		local mpos = {
 			x = pos.x - lastpos.x,
 			y = pos.y - lastpos.y,
-			z = pos.z-lastpos.z
+			z = pos.z - lastpos.z
 		}
+
 		local npos = {
 			x = bows.rnd(pos.x),
 			y = bows.rnd(pos.y),
 			z = bows.rnd(pos.z)
 		}
+
 		local m = {x = -0.6, y = -0.6, z = -0.6}
 		local bigest = {x = mpos.x, y = mpos.y, z = mpos.z}
 
@@ -37,10 +40,12 @@ bows.on_hit_node = function(self, pos, user, lastpos)
 			bigest.x = bigest.x * -1
 			m.x = 0.6
 		end
+
 		if bigest.y < 0 then
 			bigest.y = bigest.y * -1
 			m.y = 0.6
 		end
+
 		if bigest.z < 0 then
 			bigest.z = bigest.z * -1
 			m.z = 0.6
@@ -62,9 +67,11 @@ bows.on_hit_node = function(self, pos, user, lastpos)
 	return self
 end
 
+
 bows.rnd = function(r)
 	return math.floor(r + 0.5)
 end
+
 
 bows.arrow_remove = function(self)
 
@@ -72,6 +79,7 @@ bows.arrow_remove = function(self)
 
 	return self
 end
+
 
 minetest.register_entity("bows:arrow",{
 
@@ -81,40 +89,6 @@ minetest.register_entity("bows:arrow",{
 	collisionbox = {0,0,0,0,0,0},
 	physical = false,
 	textures = {"air"},
-
-	on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir)
-
-		if not self.target then
-			return self
-		end
-
-		if not self.hp then
-			self.hp = self.object:get_hp()
-		end
-
-		local hp = self.object:get_hp()
-		local hurt = self.hp - self.object:get_hp()
-
-		self.hp = self.object:get_hp()
-		self.target:set_hp(self.target:get_hp() - hurt)
-		self.target:punch(self.object, hurt,{
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = 4}
-		}, "default:sword_wood", nil)
-
-		if hurt > 100 or hp <= hurt then
-
-			self.target:set_detach()
-			self.target:set_velocity({x = 0, y = 4, z = 0})
-			self.target:set_acceleration({x = 0, y = -10, z = 0})
-			self.on_punch = function(self, puncher, time_from_last_punch,
-				tool_capabilities, dir) end
-
-			bows.arrow_remove(self)
-		end
-
-		return self
-	end,
 
 	on_activate = function(self, staticdata)
 
@@ -166,15 +140,9 @@ minetest.register_entity("bows:arrow",{
 		local pos = self.object:get_pos()
 		local nod = minetest.get_node(pos)
 
-		if ( self.user == nil or self.timer < 16 )
+		if (self.user == nil or self.timer < 16)
 		or (minetest.registered_nodes[nod.name]
 		and minetest.registered_nodes[nod.name].walkable) then
-
-			if bows.mesecons
-			and minetest.get_node(pos).name == "bows:target" then
-				mesecon.receptor_on(pos)
-				minetest.get_node_timer(pos):start(2)
-			end
 
 			self.object:set_velocity({x = 0, y = 0, z = 0})
 			self.object:set_acceleration({x = 0, y = 0, z = 0})
@@ -223,7 +191,6 @@ minetest.register_entity("bows:arrow",{
 			end
 		end
 
-	return self
-
+		return self
 	end,
 })

@@ -3,9 +3,7 @@
 
 bows = {
 	pvp = minetest.settings:get_bool("enable_pvp"),
-	tnt = minetest.settings:get_bool("enable_tnt") and minetest.get_modpath("tnt"),
 	creative = minetest.settings:get_bool("creative_mode"),
-	mesecons = minetest.get_modpath("mesecons"),
 	registed_arrows = {},
 	registed_bows = {},
 }
@@ -15,6 +13,7 @@ minetest.register_craft({
 	recipe = "group:bow",
 	burntime = 3,
 })
+
 
 bows.register_arrow = function(name, def)
 
@@ -29,6 +28,7 @@ bows.register_arrow = function(name, def)
 	def.on_hit_object = def.on_hit_object or bows.nothing
 	def.on_hit_node = def.on_hit_node or bows.on_hit_node
 	def.on_hit_sound = def.on_hit_sound or "default_dig_dig_immediate"
+
 	bows.registed_arrows[def.name] = def
 
 	minetest.register_craftitem("bows:" .. name, {
@@ -39,14 +39,13 @@ bows.register_arrow = function(name, def)
 
 	if def.craft then
 
-		def.craft_count = def.craft_count or 4
-
 		minetest.register_craft({
-			output = def.name .." " .. def.craft_count,
+			output = def.name .." " .. (def.craft_count or 4),
 			recipe = def.craft
 		})
 	end
 end
+
 
 bows.register_bow = function(name, def)
 
@@ -80,6 +79,7 @@ bows.register_bow = function(name, def)
 	end
 end
 
+
 bows.load = function(itemstack, user, pointed_thing)
 
 	local inv = user:get_inventory()
@@ -101,12 +101,13 @@ bows.load = function(itemstack, user, pointed_thing)
 	itemstack:replace(item)
 
 	if bows.creative == false then
-		inv:set_stack("main", index, ItemStack(arrow:get_name()
-			.. " " .. (arrow:get_count() - 1)))
+		inv:set_stack("main", index,
+				ItemStack(arrow:get_name() .. " " .. (arrow:get_count() - 1)))
 	end
 
 	return itemstack
 end
+
 
 bows.shoot = function(itemstack, user, pointed_thing)
 
@@ -142,12 +143,7 @@ bows.shoot = function(itemstack, user, pointed_thing)
 		z = pos.z
 	}, "bows:arrow")
 
-	e:set_velocity({
-		x = dir.x * level,
-		y = dir.y * level,
-		z = dir.z * level
-	})
-
+	e:set_velocity({x = dir.x * level, y = dir.y * level, z = dir.z * level})
 	e:set_acceleration({x = dir.x * -3, y = -10, z = dir.z * -3})
 	e:set_yaw(user:get_look_yaw() + math.pi)
 
@@ -159,6 +155,7 @@ bows.shoot = function(itemstack, user, pointed_thing)
 
 	return itemstack
 end
+
 
 dofile(minetest.get_modpath("bows") .. "/arrow.lua")
 dofile(minetest.get_modpath("bows") .. "/items.lua")
