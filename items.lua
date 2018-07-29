@@ -15,12 +15,18 @@ bows.register_bow("bow_wood",{
 	},
 })
 
+minetest.register_craft({
+	type = "fuel",
+	recipe = "bows:bow_wood",
+	burntime = 3,
+})
+
 bows.register_bow("bow_steel",{
 	description = "Steel bow",
 	texture = "bows_bow_steel.png",
 	texture_loaded = "bows_bow_loaded_steel.png",
-	uses = 140,
-	level = 8,
+	uses = 280, --140,
+	level = 10, --8,
 	craft = {
 		{"", "default:steel_ingot", "farming:string"},
 		{"default:steel_ingot", "", "farming:string"},
@@ -32,13 +38,21 @@ bows.register_bow("bow_bronze",{
 	description = "Bronze bow",
 	texture = "bows_bow_bronze.png",
 	texture_loaded = "bows_bow_loaded_bronze.png",
-	uses = 280,
-	level = 10,
+	uses = 140, --280,
+	level = 8, --10,
 	craft = {
 		{"", "default:bronze_ingot", "farming:string"},
 		{"default:bronze_ingot", "", "farming:string"},
 		{"", "default:bronze_ingot", "farming:string"}
 	},
+})
+
+bows.register_bow("bow_bowie",{
+	description = "David BOWie",
+	texture = "bows_bow_bowie.png",
+	texture_loaded = "bows_bow_loaded_bowie.png",
+	uses = 500,
+	level = 12,
 })
 
 bows.register_arrow("arrow",{
@@ -47,8 +61,14 @@ bows.register_arrow("arrow",{
 	damage = 5,
 	craft_count = 4,
 	craft = {
-		{"default:flint", "group:stick", "mobs:chicken_feather"}
+		{"default:flint", "group:stick", bows.feather}
 	}
+})
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "bows:arrow",
+	burntime = 1,
 })
 
 bows.register_arrow("arrow_steel",{
@@ -57,7 +77,7 @@ bows.register_arrow("arrow_steel",{
 	damage = 8,
 	craft_count = 4,
 	craft = {
-		{"default:steel_ingot", "group:stick", "mobs:chicken_feather"}
+		{"default:steel_ingot", "group:stick", bows.feather}
 	}
 })
 
@@ -67,7 +87,7 @@ bows.register_arrow("arrow_mese",{
 	damage = 12,
 	craft_count = 4,
 	craft = {
-		{"default:mese_crystal", "group:stick", "mobs:chicken_feather"}
+		{"default:mese_crystal", "group:stick", bows.feather}
 	}
 })
 
@@ -77,6 +97,6 @@ bows.register_arrow("arrow_diamond",{
 	damage = 15,
 	craft_count = 4,
 	craft = {
-		{"default:diamond", "group:stick", "mobs:chicken_feather"}
+		{"default:diamond", "group:stick", bows.feather}
 	}
 })

@@ -4,15 +4,10 @@
 bows = {
 	pvp = minetest.settings:get_bool("enable_pvp"),
 	creative = minetest.settings:get_bool("creative_mode"),
+	feather = minetest.get_modpath("mobs") and "mobs:chicken_feather" or "default:leaves",
 	registed_arrows = {},
 	registed_bows = {},
 }
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:bow",
-	burntime = 3,
-})
 
 
 bows.register_arrow = function(name, def)
@@ -157,5 +152,11 @@ bows.shoot = function(itemstack, user, pointed_thing)
 end
 
 
-dofile(minetest.get_modpath("bows") .. "/arrow.lua")
-dofile(minetest.get_modpath("bows") .. "/items.lua")
+local path = minetest.get_modpath("bows")
+
+dofile(path .. "/arrow.lua")
+dofile(path .. "/items.lua")
+dofile(path .. "/lucky_block.lua")
+
+
+print ("[MOD] Bows loaded")
