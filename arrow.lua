@@ -81,6 +81,50 @@ bows.arrow_remove = function(self)
 end
 
 
+--= Functions borrowed from Kaeza's Firearms mod
+
+local min, max = math.min, math.max
+
+local function minmax(x, y)
+	return min(x, y), max(x, y)
+end
+
+
+local function point_in_box(p, b1, b2)
+
+	local xmin, xmax = minmax(b1.x, b2.x)
+	local ymin, ymax = minmax(b1.y, b2.y)
+	local zmin, zmax = minmax(b1.z, b2.z)
+	local px, py, pz = p.x, p.y, p.z
+
+	return  px >= xmin and px <= xmax and
+			py >= ymin and py <= ymax and
+			pz >= zmin and pz <= zmax
+end
+
+
+local function get_obj_box_abs(obj)
+
+	local box
+
+	if obj:is_player() then
+		box = { -.5, -.5, -.5, .5, 1.5, .5 }
+	else
+		box = (obj:get_luaentity().collisionbox
+				or { -0.5,-0.5,-0.5, 0.5,0.5,0.5 })
+	end
+
+	local pos = obj:get_pos()
+	local px, py, pz = pos.x, pos.y, pos.z
+	local x1, y1, z1, x2, y2, z2 = unpack(box)
+
+	return {x = x1 + px, y = y1 + py, z = z1 + pz},
+			{x = x2 + px, y = y2 + py, z = z2 + pz}
+end
+
+--= END of borrow :)
+
+
 minetest.register_entity("bows:arrow",{
 
 	hp_max = 10,
@@ -161,7 +205,7 @@ minetest.register_entity("bows:arrow",{
 		self.y = pos.y
 		self.z = pos.z
 
-		for i, ob in pairs(minetest.get_objects_inside_radius(pos, 1.0)) do
+		for i, ob in pairs(minetest.get_objects_inside_radius(pos, 3.0)) do
 
 			if ob
 			and ( (bows.pvp
@@ -172,22 +216,29 @@ minetest.register_entity("bows:arrow",{
 			and ob:get_luaentity().physical
 			and ob:get_luaentity().name ~= "__builtin:item") ) then
 
-				self.object:set_velocity({x = 0, y = 0, z = 0})
-				self.object:set_acceleration({x = 0, y = 0, z = 0})
-				self.stuck = true
+				-- Entity specific collision detection
+				-- Thanks to Kaeza's Firearms mod :)
+				local p1, p2 = get_obj_box_abs(ob)
 
-				bows.on_hit_object(self, ob, self.dmg, self.user,{
-					x = self.x, y = self.y, z = self.z})
+				if point_in_box(pos, p1, p2) then
 
-				bows.registed_arrows[self.name].on_hit_object(
-					self, ob, self.dmg, self.user,
-					{x = self.x, y = self.y, z = self.z})
+					self.object:set_velocity({x = 0, y = 0, z = 0})
+					self.object:set_acceleration({x = 0, y = 0, z = 0})
+					self.stuck = true
 
-				minetest.sound_play(
-					bows.registed_arrows[self.name].on_hit_sound, {
-						pos = pos, gain = 1.0, max_hear_distance = 7})
+					bows.on_hit_object(self, ob, self.dmg, self.user,{
+						x = self.x, y = self.y, z = self.z})
 
-				return self
+					bows.registed_arrows[self.name].on_hit_object(
+						self, ob, self.dmg, self.user,
+						{x = self.x, y = self.y, z = self.z})
+
+					minetest.sound_play(
+						bows.registed_arrows[self.name].on_hit_sound, {
+							pos = pos, gain = 1.0, max_hear_distance = 7})
+
+					return self
+				end
 			end
 		end
 
