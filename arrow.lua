@@ -81,7 +81,7 @@ bows.arrow_remove = function(self)
 end
 
 
---= Functions borrowed from Kaeza's Firearms mod
+--= Functions borrowed from Kaeza's Firearms mod (BSD 2 clause license)
 
 local min, max = math.min, math.max
 
