@@ -56,7 +56,7 @@ bows.on_hit_node = function(self, pos, user, lastpos)
 			pos.z = npos.z + m.z
 		end
 
-		self.object:setpos(pos)
+		self.object:set_pos(pos)
 	end
 
 	return self
@@ -125,10 +125,10 @@ minetest.register_entity("bows:arrow",{
 
 		if bows.tmp and bows.tmp.arrow ~= nil then
 
-			self.arrow=bows.tmp.arrow
-			self.user=bows.tmp.user
-			self.name=bows.tmp.name
-			self.dmg=bows.registed_arrows[self.name].damage
+			self.arrow = bows.tmp.arrow
+			self.user = bows.tmp.user
+			self.name = bows.tmp.name
+			self.dmg = bows.registed_arrows[self.name].damage
 
 			bows.tmp = nil
 
@@ -163,11 +163,12 @@ minetest.register_entity("bows:arrow",{
 			return self
 		end
 
-		local pos = self.object:getpos()
+		local pos = self.object:get_pos()
+		local nod = minetest.get_node(pos)
 
 		if ( self.user == nil or self.timer < 16 )
-		or minetest.get_node(pos)
-		and minetest.registered_nodes[minetest.get_node(pos).name].walkable then
+		or (minetest.registered_nodes[nod.name]
+		and minetest.registered_nodes[nod.name].walkable) then
 
 			if bows.mesecons
 			and minetest.get_node(pos).name == "bows:target" then

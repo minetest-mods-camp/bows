@@ -47,7 +47,7 @@ bows.register_arrow("arrow",{
 	damage = 5,
 	craft_count = 4,
 	craft = {
-		{"default:flint", "group:stick", "mobs:chicken_feather"} -- "group:leaves"}
+		{"default:flint", "group:stick", "mobs:chicken_feather"}
 	}
 })
 
@@ -57,7 +57,7 @@ bows.register_arrow("arrow_steel",{
 	damage = 8,
 	craft_count = 4,
 	craft = {
-		{"default:steel_ingot", "group:stick", "mobs:chicken_feather"} -- "group:leaves"}
+		{"default:steel_ingot", "group:stick", "mobs:chicken_feather"}
 	}
 })
 
@@ -67,7 +67,7 @@ bows.register_arrow("arrow_mese",{
 	damage = 12,
 	craft_count = 4,
 	craft = {
-		{"default:mese_crystal", "group:stick", "mobs:chicken_feather"} -- "group:leaves"}
+		{"default:mese_crystal", "group:stick", "mobs:chicken_feather"}
 	}
 })
 
@@ -77,6 +77,6 @@ bows.register_arrow("arrow_diamond",{
 	damage = 15,
 	craft_count = 4,
 	craft = {
-		{"default:diamond", "group:stick", "mobs:chicken_feather"} -- "group:leaves"}
+		{"default:diamond", "group:stick", "mobs:chicken_feather"}
 	}
 })

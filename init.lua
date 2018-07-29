@@ -142,14 +142,14 @@ bows.shoot = function(itemstack, user, pointed_thing)
 		z = pos.z
 	}, "bows:arrow")
 
-	e:setvelocity({
+	e:set_velocity({
 		x = dir.x * level,
 		y = dir.y * level,
 		z = dir.z * level
 	})
 
-	e:setacceleration({x = dir.x * -3, y = -10, z = dir.z * -3})
-	e:setyaw(user:get_look_yaw() + math.pi)
+	e:set_acceleration({x = dir.x * -3, y = -10, z = dir.z * -3})
+	e:set_yaw(user:get_look_yaw() + math.pi)
 
 	if bows.creative == false then
 		itemstack:add_wear(65535 / wear)
