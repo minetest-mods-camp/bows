@@ -3,11 +3,17 @@
 
 bows = {
 	pvp = minetest.settings:get_bool("enable_pvp"),
-	creative = minetest.settings:get_bool("creative_mode"),
 	feather = minetest.get_modpath("mobs") and "mobs:chicken_feather" or "default:leaves",
 	registed_arrows = {},
 	registed_bows = {},
 }
+
+
+local creative_mode_cache = minetest.settings:get_bool("creative_mode")
+
+function bows.is_creative(name)
+	return creative_mode_cache or minetest.check_player_privs(name, {creative = true})
+end
 
 
 bows.register_arrow = function(name, def)
@@ -20,8 +26,8 @@ bows.register_arrow = function(name, def)
 	def.damage = def.damage or 0
 	def.name = "bows:" .. name
 	def.level = def.level or 1
-	def.on_hit_object = def.on_hit_object or bows.nothing
-	def.on_hit_node = def.on_hit_node or bows.on_hit_node
+	def.on_hit_object = def.on_hit_object
+	def.on_hit_node = def.on_hit_node
 	def.on_hit_sound = def.on_hit_sound or "default_dig_dig_immediate"
 
 	bows.registed_arrows[def.name] = def
@@ -95,7 +101,7 @@ bows.load = function(itemstack, user, pointed_thing)
 
 	itemstack:replace(item)
 
-	if bows.creative == false then
+	if not bows.is_creative(user:get_player_name()) then
 		inv:set_stack("main", index,
 				ItemStack(arrow:get_name() .. " " .. (arrow:get_count() - 1)))
 	end
@@ -142,7 +148,7 @@ bows.shoot = function(itemstack, user, pointed_thing)
 	e:set_acceleration({x = dir.x * -3, y = -10, z = dir.z * -3})
 	e:set_yaw(user:get_look_yaw() + math.pi)
 
-	if bows.creative == false then
+	if not bows.is_creative(user:get_player_name()) then
 		itemstack:add_wear(65535 / wear)
 	end
 

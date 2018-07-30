@@ -26,7 +26,7 @@ bows.register_bow("bow_steel",{
 	texture = "bows_bow_steel.png",
 	texture_loaded = "bows_bow_loaded_steel.png",
 	uses = 280, --140,
-	level = 10, --8,
+	level = 5, --8,
 	craft = {
 		{"", "default:steel_ingot", "farming:string"},
 		{"default:steel_ingot", "", "farming:string"},
@@ -39,7 +39,7 @@ bows.register_bow("bow_bronze",{
 	texture = "bows_bow_bronze.png",
 	texture_loaded = "bows_bow_loaded_bronze.png",
 	uses = 140, --280,
-	level = 8, --10,
+	level = 3, --10,
 	craft = {
 		{"", "default:bronze_ingot", "farming:string"},
 		{"default:bronze_ingot", "", "farming:string"},
@@ -52,7 +52,7 @@ bows.register_bow("bow_bowie",{
 	texture = "bows_bow_bowie.png",
 	texture_loaded = "bows_bow_loaded_bowie.png",
 	uses = 500,
-	level = 12,
+	level = 7,
 })
 
 bows.register_arrow("arrow",{
@@ -78,7 +78,12 @@ bows.register_arrow("arrow_steel",{
 	craft_count = 4,
 	craft = {
 		{"default:steel_ingot", "group:stick", bows.feather}
-	}
+	},
+	on_hit_object = function(self, target, hp, user, lastpos)
+		if target:get_luaentity().name == "mob_horse:horse" then
+			print ("--- aww da horsey!!!")
+		end
+	end,
 })
 
 bows.register_arrow("arrow_mese",{
@@ -88,7 +93,19 @@ bows.register_arrow("arrow_mese",{
 	craft_count = 4,
 	craft = {
 		{"default:mese_crystal", "group:stick", bows.feather}
-	}
+	},
+	on_hit_node = function(self, pos, user, arrow_pos)
+		minetest.add_particle({
+			pos = pos,
+			velocity = {x=0, y=0, z=0},
+			acceleration = {x=0, y=0, z=0},
+			expirationtime = 1,
+			size = 4,
+			collisiondetection = false,
+			vertical = false,
+			texture = "heart.png",
+		})
+	end,
 })
 
 bows.register_arrow("arrow_diamond",{
@@ -98,5 +115,13 @@ bows.register_arrow("arrow_diamond",{
 	craft_count = 4,
 	craft = {
 		{"default:diamond", "group:stick", bows.feather}
-	}
+	},
+	on_hit_node = function(self, pos, user, arrow_pos)
+		if self.node.name == "default:glass" then
+			minetest.sound_play("default_break_glass", {
+				pos = pos, gain = 1.0, max_hear_distance = 10})
+			minetest.remove_node(pos)
+			minetest.add_item(pos, "vessels:glass_fragments")
+		end
+	end,
 })
