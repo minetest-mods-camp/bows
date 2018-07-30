@@ -62,7 +62,22 @@ bows.register_arrow("arrow",{
 	craft_count = 4,
 	craft = {
 		{"default:flint", "group:stick", bows.feather}
-	}
+	},
+--[[
+	on_hit_node = function(self, pos, user, arrow_pos)
+
+		minetest.add_particle({
+			pos = pos,
+			velocity = {x=0, y=0, z=0},
+			acceleration = {x=0, y=0, z=0},
+			expirationtime = 1,
+			size = 4,
+			collisiondetection = false,
+			vertical = false,
+			texture = "heart.png",
+		})
+	end,
+]]
 })
 
 minetest.register_craft({
@@ -95,16 +110,16 @@ bows.register_arrow("arrow_mese",{
 		{"default:mese_crystal", "group:stick", bows.feather}
 	},
 	on_hit_node = function(self, pos, user, arrow_pos)
-		minetest.add_particle({
-			pos = pos,
-			velocity = {x=0, y=0, z=0},
-			acceleration = {x=0, y=0, z=0},
-			expirationtime = 1,
-			size = 4,
-			collisiondetection = false,
-			vertical = false,
-			texture = "heart.png",
-		})
+
+		if self.node.name == "mesecons_switch:mesecon_switch_on"
+		or self.node.name == "mesecons_switch:mesecon_switch_off" then
+
+			local def = minetest.registered_nodes[self.node.name]
+
+			-- This should toggle switch on/off but for some reason only
+			-- node changes, it doesn't power attached cables or lights ?!?
+			def.on_rightclick(pos, self.node, user)
+		end
 	end,
 })
 
