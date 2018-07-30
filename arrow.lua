@@ -188,9 +188,9 @@ minetest.register_entity("bows:arrow",{
 				local pos = self.object:get_pos()
 				local lastpos = {x = pos.x, y = pos.y, z = pos.z}
 
-				pos.x = pos.x + (oldvel.x / 100)
-				pos.y = pos.y + (oldvel.y / 100)
-				pos.z = pos.z + (oldvel.z / 100)
+				pos.x = pos.x + (self.oldvel.x / 100)
+				pos.y = pos.y + (self.oldvel.y / 100)
+				pos.z = pos.z + (self.oldvel.z / 100)
 
 				self.node = minetest.get_node(pos)
 
@@ -203,6 +203,6 @@ minetest.register_entity("bows:arrow",{
 			return self
 		end
 
-		oldvel = vel
+		self.oldvel = vel
 	end,
 })
