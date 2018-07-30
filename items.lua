@@ -116,9 +116,10 @@ bows.register_arrow("arrow_mese",{
 
 			local def = minetest.registered_nodes[self.node.name]
 
-			-- This should toggle switch on/off but for some reason only
-			-- node changes, it doesn't power attached cables or lights ?!?
-			def.on_rightclick(pos, self.node, user)
+			-- This toggles the mesecons switch on/off
+			if def and def.on_rightclick then
+				def.on_rightclick(vector.round(pos), self.node, user)
+			end
 		end
 	end,
 })
