@@ -133,7 +133,8 @@ bows.register_arrow("arrow_diamond",{
 		{"default:diamond", "group:stick", bows.feather}
 	},
 	on_hit_node = function(self, pos, user, arrow_pos)
-		if self.node.name == "default:glass" then
+		if self.node.name == "default:glass"
+		and not minetest.is_protected(pos, user:get_player_name()) then
 			minetest.sound_play("default_break_glass", {
 				pos = pos, gain = 1.0, max_hear_distance = 10})
 			minetest.remove_node(pos)
