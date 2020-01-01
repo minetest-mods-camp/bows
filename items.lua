@@ -95,7 +95,7 @@ bows.register_arrow("arrow_steel",{
 		{"default:steel_ingot", "group:stick", bows.feather}
 	},
 	on_hit_object = function(self, target, hp, user, lastpos)
-		if target and target:get_luaentity().name == "mob_horse:horse" then
+		if target and target:get_luaentity() and target:get_luaentity().name == "mob_horse:horse" then
 			print ("--- aww da horsey!!!")
 		end
 	end,
