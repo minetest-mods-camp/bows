@@ -60,6 +60,7 @@ bows.register_arrow("arrow",{
 	texture = "bows_arrow_wood.png",
 	damage = 5,
 	craft_count = 4,
+	drop_chance = 10,
 	craft = {
 		{"default:flint", "group:stick", bows.feather}
 	},
@@ -91,11 +92,15 @@ bows.register_arrow("arrow_steel",{
 	texture = "bows_arrow_wood.png^[colorize:#FFFFFFcc",
 	damage = 8,
 	craft_count = 4,
+	drop_chance = 8,
 	craft = {
 		{"default:steel_ingot", "group:stick", bows.feather}
 	},
 	on_hit_object = function(self, target, hp, user, lastpos)
-		if target and target:get_luaentity() and target:get_luaentity().name == "mob_horse:horse" then
+		if target
+		and target:get_luaentity()
+		and target:get_luaentity().name
+		and target:get_luaentity().name == "mob_horse:horse" then
 			print ("--- aww da horsey!!!")
 		end
 	end,
@@ -106,6 +111,7 @@ bows.register_arrow("arrow_mese",{
 	texture = "bows_arrow_wood.png^[colorize:#e3ff00cc",
 	damage = 12,
 	craft_count = 4,
+	drop_chance = 6,
 	craft = {
 		{"default:mese_crystal", "group:stick", bows.feather}
 	},
@@ -129,6 +135,7 @@ bows.register_arrow("arrow_diamond",{
 	texture = "bows_arrow_wood.png^[colorize:#15d7c2cc",
 	damage = 15,
 	craft_count = 4,
+	drop_chance = 4,
 	craft = {
 		{"default:diamond", "group:stick", bows.feather}
 	},

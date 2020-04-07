@@ -56,6 +56,13 @@ local on_hit_remove = function(self)
 			max_hear_distance = 7
 		})
 
+	-- chance of dropping arrow
+	local chance = minetest.registered_items[self.name].drop_chance
+
+	if math.random(chance) == 1 then
+		minetest.add_item(self.object:get_pos(), self.name)
+	end
+
 	self.object:remove()
 
 	return self
