@@ -93,7 +93,7 @@ minetest.register_entity("bows:arrow",{
 	hp_max = 10,
 	visual = "wielditem",
 	visual_size = {x = .20, y = .20},
-	collisionbox = {0,0,0,0,0,0},
+	collisionbox = {-0.1,-0.1,-0.1,0.1,0.1,0.1},
 	physical = true,
 	textures = {"air"},
 	_is_arrow = true,
