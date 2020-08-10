@@ -62,14 +62,14 @@ bows.register_bow = function(name, def)
 
 	bows.registed_bows[def.replace] = def
 
-	minetest.register_tool(def.name, {
+	minetest.register_tool(":" .. def.name, {
 		description = def.description or name,
 		inventory_image = def.texture or "bows_bow.png",
 		on_use = bows.load,
 		groups = {bow = 1, stick = 1},
 	})
 
-	minetest.register_tool(def.replace, {
+	minetest.register_tool(":" .. def.replace, {
 		description = def.description or name,
 		inventory_image = def.texture_loaded or "bows_bow_loaded.png",
 		on_use = bows.shoot,
