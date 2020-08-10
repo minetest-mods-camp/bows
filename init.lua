@@ -32,7 +32,7 @@ bows.register_arrow = function(name, def)
 
 	bows.registed_arrows[def.name] = def
 
-	minetest.register_craftitem("bows:" .. name, {
+	minetest.register_craftitem(":bows:" .. name, {
 		description = def.description or name,
 		inventory_image = def.texture or "bows_arrow_wooden.png",
 		groups = {arrow = 1},
