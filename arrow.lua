@@ -122,7 +122,7 @@ minetest.register_entity("bows:arrow",{
 		end
 	end,
 
-	on_step = function(self, dtime)
+	on_step = function(self, dtime, ...)
 
 		self.timer = self.timer - dtime
 
