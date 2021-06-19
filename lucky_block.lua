@@ -11,13 +11,13 @@ if minetest.get_modpath("lucky_block") then
 		{"dro", {"bows:arrow_diamond"}, 5},
 		{"nod", "default:chest", 0, {
 			{name = "default:stick", max = 5},
-			{name = "default:flint", max = 3},
-			{name = "default:steel_ingot", max = 3},
-			{name = "default:bronze_ingot", max = 3},
-			{name = "default:mese_crystal_fragment", max = 3},
+			{name = "default:flint", max = 5},
+			{name = "default:steel_ingot", max = 5},
+			{name = "default:bronze_ingot", max = 5},
+			{name = "default:mese_crystal_fragment", max = 5},
 			{name = "farming:string", max = 5},
-			{name = bows.feather, max = 4},
-			{name = "bows:bow_bowie", max = 1}
+			{name = bows.feather, max = 5},
+			{name = "bows:bow_bowie", max = 1, chance = 4}
 		}},
 	})
 end
